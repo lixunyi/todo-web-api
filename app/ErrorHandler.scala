@@ -37,12 +37,9 @@ class ErrorHandler(environment: Environment,
                              message: String): Future[Result] = {
     Future.successful {
       val result = statusCode match {
-        case BAD_REQUEST =>
-          Results.BadRequest(message)
-        case FORBIDDEN =>
-          Results.Forbidden(message)
-        case NOT_FOUND =>
-          Results.NotFound(message)
+        case BAD_REQUEST => Results.BadRequest(message)
+        case FORBIDDEN   => Results.Forbidden(message)
+        case NOT_FOUND   => Results.NotFound(message)
         case clientError if statusCode >= 400 && statusCode < 500 =>
           Results.Status(statusCode)
         case nonClientError =>
@@ -54,9 +51,7 @@ class ErrorHandler(environment: Environment,
     }
   }
 
-  override protected def onDevServerError(
-      request: RequestHeader,
-      exception: UsefulException): Future[Result] = {
+  override protected def onDevServerError(request: RequestHeader,exception: UsefulException): Future[Result] = {
     Future.successful({
       val json: JsValue = Json.obj(
         "code" -> "0",

@@ -7,16 +7,16 @@
 GET     /                              controllers.HomeController.index
 
 GET      /v1/todo                      controllers.TodoController.index()
-#GET     /v1/todo/:id                  controllers.TodoController.show(id)
-#POST    /v1/todo                      controllers.TodoController.create()
-#PATCH   /v1/todo/:id                  controllers.TodoController.update(id)
-#DELETE  /v1/todo/:id                  controllers.TodoController.delete(id)
+GET      /v1/todo/:id                  controllers.TodoController.show(id:Long)
+POST     /v1/todo                      controllers.TodoController.create()
+PATCH    /v1/todo/:id                  controllers.TodoController.update(id:Long)
+DELETE   /v1/todo/:id                  controllers.TodoController.delete(id:Long)
 
-#GET     /v1/category                   controllers.CategoryController.index()
-#GET     /v1/category/:id               controllers.CategoryController.show(id)
-#POST    /v1/category                   controllers.CategoryController.create()
-#PATCH   /v1/category/:id               controllers.CategoryController.update(id)
-#DELETE  /v1/category/:id               controllers.CategoryController.delete(id)
+GET     /v1/category                   controllers.CategoryController.index()
+GET     /v1/category/:id               controllers.CategoryController.show(id:Long)
+POST    /v1/category                   controllers.CategoryController.create()
+PATCH   /v1/category/:id               controllers.CategoryController.update(id:Long)
+DELETE  /v1/category/:id               controllers.CategoryController.delete(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

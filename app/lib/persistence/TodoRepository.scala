@@ -1,6 +1,5 @@
 package lib.persistence
 
-import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import ixias.persistence.SlickRepository
 import lib.model.Todo
@@ -9,8 +8,7 @@ import slick.jdbc.JdbcProfile
 
 // TodoRepository: TodoTableへのクエリ発行を行うRepository層の定義
 //~~~~~~~~~~~~~~~~~~~~~~
-@Singleton()
-case class TodoRepository[P <: JdbcProfile]@Inject()()(implicit val driver: P)
+case class TodoRepository[P <: JdbcProfile]()(implicit val driver: P)
 	extends SlickRepository[Todo.Id, Todo, P]
 	with db.SlickResourceProvider[P] {
 

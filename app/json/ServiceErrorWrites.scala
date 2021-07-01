@@ -2,7 +2,7 @@ package json
 
 import play.api.libs.json.{Json, Writes, JsString, JsArray}
 import services.ServiceError
-import play.api.libs.functional.syntax._
+//import play.api.libs.functional.syntax._
 
 trait ServiceErrorWrites {
   implicit val defaultServiceErrorWrites = Writes[ServiceError] { error =>
