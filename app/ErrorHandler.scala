@@ -9,7 +9,8 @@ import play.api.mvc._
 import play.api.routing.Router
 import play.core.SourceMapper
 import play.api.libs.json.{JsPath, Json, Writes, JsValue}
-
+import services._
+import json._
 import scala.concurrent._
 
 class ErrorHandler(environment: Environment,
@@ -19,7 +20,7 @@ class ErrorHandler(environment: Environment,
     extends DefaultHttpErrorHandler(environment,
                                     configuration,
                                     sourceMapper,
-                                    optionRouter) {
+                                    optionRouter) with ServiceErrorWrites{
 
   @Inject
   def this(environment: Environment,
@@ -53,11 +54,9 @@ class ErrorHandler(environment: Environment,
 
   override protected def onDevServerError(request: RequestHeader,exception: UsefulException): Future[Result] = {
     Future.successful({
-      val json: JsValue = Json.obj(
-        "code" -> "0",
-        "message" -> exception.toString,
-      )
-      InternalServerError(json)
+    
+      handleError(SystemError("0",exception.toString))
+
     })
   }
 
@@ -65,5 +64,11 @@ class ErrorHandler(environment: Environment,
       request: RequestHeader,
       exception: UsefulException): Future[Result] = {
       Future.successful(InternalServerError)
+  }
+
+  private def handleError(error: ServiceError) = {
+    error match {
+      case _: SystemError => InternalServerError(Json.toJson(error))
+    }
   }
 }

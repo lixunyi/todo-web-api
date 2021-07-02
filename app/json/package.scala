@@ -1,4 +1,5 @@
 import play.api.libs.json._
+import play.api.libs.json.Reads._
 
 package object json {
   implicit class JsPathOps(self: JsPath) {
@@ -23,4 +24,12 @@ package object json {
     }
     // ※インデントが奇抜ですが、scalafmtの結果です。
   }
+
+  def nameValidate    = pattern("""([^\x01-\x7E]|[\da-zA-Z]|[^\S\r\n])+""".r,"カテゴリは英数字・日本語などしか含まれていません")
+  def slugValidate    = pattern("""([\da-zA-Z]|[^\S\r\n])+""".r,"slugは英数字しか含まれていません")
+  def colorValidate   = pattern("""(1|2|3)""".r,"colorは数字(1,2,3)しか含まれていません")
+
+  def bodyValidation  = pattern("""([^\x01-\x7E]|[\da-zA-Z]|[^\S])+""".r ,"本文は英数字・日本語・改行などしか含まれていません")
+ 	def titleValidation = pattern("""([^\x01-\x7E]|[\da-zA-Z]|[^\S\r\n])+""".r,"タイトルは英数字・日本語などしか含まれていません")
+  
 }

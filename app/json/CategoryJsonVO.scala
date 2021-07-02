@@ -8,8 +8,8 @@ case class CategoryJsonVO(name: String, slug: String,color : String)
 
 object CategoryJsonVO {
   implicit val reads = (
-    (JsPath \ "name").read[String](minLength[String](1) keepAnd maxLength[String](255)) and
-    (JsPath \ "slug").read[String](minLength[String](1) keepAnd maxLength[String](255)) and
-    (JsPath \ "color").read[String](minLength[String](1) keepAnd maxLength[String](255))
+    (JsPath \ "name").read[String](nameValidate) and
+    (JsPath \ "slug").read[String](slugValidate) and
+    (JsPath \ "color").read[String](colorValidate)
   )(apply _)
 }

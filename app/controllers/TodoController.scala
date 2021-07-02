@@ -31,16 +31,25 @@ class TodoController @Inject()(todoService: TodoService,
 				todo
 		  })
       Ok(Json.toJson(todos))
-		}
+    }
     
   }  
 
   def show(id: Long) = Action.async {
-    todoService.get(Todo.Id(id)).map {
-      _.fold(
+
+    for{
+			cates <- categoryService.getAll()
+      todoEh  <- todoService.get(Todo.Id(id))
+		}yield {
+      todoEh.fold(
         handleError,
-        entity => Ok(Json.toJson(entity.v))
-      )
+        entity => {
+          val todo = entity.v
+          todo.category = cates.find(c => c.id.get == todo.category_id).getOrElse(null)
+          Ok(Json.toJson(todo))
+        }
+          
+      ) 
     }
   }
 

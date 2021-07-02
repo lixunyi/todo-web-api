@@ -10,3 +10,6 @@ case class TodoNotFound(todoId: Todo.Id) extends TodoError("error.Todo.notFound"
 
 abstract sealed class CategoryError(message: String, args: Any*) extends ServiceError(message, args: _*)
 case class CategoryNotFound(categoryId: Category.Id) extends CategoryError("error.Category.notFound",  categoryId)
+
+
+case class SystemError(override val message: String, override val args: Any*) extends ServiceError(message, args: _*)
